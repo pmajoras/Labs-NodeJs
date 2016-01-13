@@ -1,0 +1,19 @@
+{
+  "name": "management-system-rest-api",
+  "version": "0.0.0",
+  "description": "General Management System",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "(https://github.com/pmajoras/ManagementSystem)"
+  },
+  "keywords": [
+    "Management",
+    "System"
+  ],
+  "author": "Paulo Gabriel Poffal and Roberto Zaffari Irigaray",
+  "license": "MIT"
+}
