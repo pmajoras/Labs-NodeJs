@@ -4,11 +4,11 @@ class BearController {
   constructor() {
   }
   
-  getBear(req, res){
-     res.json({ message: 'hooray! welcome to our apiBear!' }); 
-  }
-  testeBear(){
-       console.log("Inicialize testBear");
+  /**
+   * Get the bears.
+   */
+  getBear(req, res) {
+    res.json({ message: 'hooray! welcome to our apiBear222!' });
   }
 }
 
