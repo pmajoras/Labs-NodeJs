@@ -1,8 +1,7 @@
-"user strict"
-var BearController = require("./routes/bear");
+"use strict";
 
 var controllers = {
-  bear: new BearController()
+  TaskController: require("./routes/task-controller")
 };
 
 module.exports = controllers;

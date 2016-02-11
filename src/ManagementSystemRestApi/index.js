@@ -1,3 +1,5 @@
+"use strict";
+
 var server = require('./Server/server');
 
 // We will log normal api operations into api.log
