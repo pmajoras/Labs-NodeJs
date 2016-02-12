@@ -1,7 +1,11 @@
 "use strict";
+var RouteObject = require('../route-object');
+var appConstants = require('../../config/app-constants');
+var BaseController = require('../base-controller');
 
-class TaskController {
-  constructor() {
+class TaskController extends BaseController {
+  constructor(allowedPermissions) {
+    super(allowedPermissions);
   }
   
   /**
@@ -14,8 +18,10 @@ class TaskController {
    * Insert a new task
    */
   insertTask() {
-    
+
   }
 }
 
-module.exports = TaskController;
+var methods = [];
+methods.push(new RouteObject(appConstants.get, "/api/tasks", "getTasks", [appConstants.mustBeAuthenticatedPermission]));
+module.exports = { "Controller": TaskController, "methods": methods };

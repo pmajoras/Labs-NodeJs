@@ -1,4 +1,13 @@
 "use strict";
+var Q = require('q');
+var defaultPromiseCallback = function (err, data, deferred) {
+  if (err) {
+    deferred.reject(err);
+  }
+  else {
+    deferred.resolve(data);
+  }
+};
 
 class BaseRepository {
   constructor(modelName, requirePath) {
@@ -6,50 +15,71 @@ class BaseRepository {
     this.Model = require(modelPath + modelName);
   }
 
-  findById(id, cb) {
+  findById(id) {
+    let deferred = Q.defer();
+
     this.Model.findOne({ _id: id }, function (err, entity) {
-      if (!err && !entity) {
-        err = true;
-      }
-
-      cb(err, entity);
+      defaultPromiseCallback(err, entity, deferred);
     });
+
+    return deferred.promise;
   }
 
-  findOne(params, cb) {
-    this.Model.findOne(params, function (err, entity) {
-      if (!err && !entity) {
-        err = true;
-      }
-
-      cb(err, entity);
-    });
-  }
-
-  findAll(params, cb, lean) {
-    if (!lean) {
-      this.Model.find(params).exec(cb);
-    } else {
-      this.Model.find(params).lean().exec(cb);
+  findOne(params, lean) {
+    let deferred = Q.defer();
+    if (lean === true) {
+      this.Model.findOne(params).lean().exec(function (err, entity) {
+        defaultPromiseCallback(err, entity, deferred);
+      });
     }
+    else {
+      this.Model.findOne(params, function (err, entity) {
+        defaultPromiseCallback(err, entity, deferred);
+      });
+    }
+
+    return deferred.promise;
   }
 
-  Save(entity, cb) {
-    this.Model.create(entity, function (err, entity) {
-      cb(err, entity);
+  findAll(params, lean) {
+    let deferred = Q.defer();
+
+    if (!lean) {
+      this.Model.find(params).exec(function (err, entities) {
+        defaultPromiseCallback(err, entities, deferred);
+      });
+    } else {
+      this.Model.find(params).lean().exec(function (err, entities) {
+        defaultPromiseCallback(err, entities, deferred);
+      });
+    }
+
+    return deferred.promise;
+  }
+
+  save(entity) {
+    let deferred = Q.defer();
+    this.Model.create(entity, function (err, newEntity) {
+      defaultPromiseCallback(err, newEntity, deferred);
     });
+    return deferred.promise;
   }
 
-  Update(entity, cb) {
+  update(entity) {
+    let deferred = Q.defer();
+
     this.Model.findOneAndUpdate({ _id: entity._id }, entity, function (err, updatedEntity) {
-      cb(err, updatedEntity);
+      defaultPromiseCallback(err, updatedEntity, deferred);
     });
+    return deferred.promise;
   }
 
-  Delete(entity, cb) {
+  delete(entity) {
+    let deferred = Q.defer();
     this.Model.remove({ _id: entity._id }, function (err) {
-      cb(err);
+      defaultPromiseCallback(err, null, deferred);
     });
+    return deferred.promise;
   }
 }
 
