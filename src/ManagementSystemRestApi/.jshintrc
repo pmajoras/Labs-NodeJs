@@ -8,6 +8,11 @@
     "console",
     "exports",
     "module",
-    "process"
+    "process",
+    "before",
+    "it",
+    "after",
+    "describe",
+    "__dirname"
   ]
 }

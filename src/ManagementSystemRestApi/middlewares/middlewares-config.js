@@ -1,6 +1,6 @@
 "use strict";
 
-var jwtMiddleware = require('./jwt-middleware');
+var jwtMiddleware = require(__dirname + '/jwt-middleware');
 
 /**
  * 
