@@ -15,5 +15,16 @@
     "System"
   ],
   "author": "Paulo Gabriel Poffal and Roberto Zaffari Irigaray",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.15.0",
+    "express": "^4.13.4",
+    "q": "^1.4.1"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-jshint": "^2.0.0",
+    "jshint": "^2.9.1",
+    "bower": "^1.7.7"
+  }
 }
