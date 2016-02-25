@@ -1,0 +1,21 @@
+{
+  "name": "ManagementSystem",
+  "version": "1.0.0",
+  "authors": [
+    "Pg"
+  ],
+  "moduleType": [
+    "node"
+  ],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "Scripts/vendor",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "angularjs#~1.5.0"
+  }
+}

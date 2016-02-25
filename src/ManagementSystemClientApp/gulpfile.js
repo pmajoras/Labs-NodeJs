@@ -4,7 +4,7 @@ var jshint = require('gulp-jshint');
 var gulp = require('gulp');
 
 var paths = {
-  scripts: ['**/*.js', '!node_modules/**/*.js', '!typings/*.ts'],
+  scripts: ['**/*.js', '!node_modules/**/*.js','!bower_components/**/*.js','!www/dist/**/*.js', '!typings/*.ts'],
 };
 
 gulp.task('jshint', function () {
