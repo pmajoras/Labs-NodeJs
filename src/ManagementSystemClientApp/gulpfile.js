@@ -7,6 +7,9 @@ var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
 var sass = require("gulp-sass");
 var mainBowerFiles = require('main-bower-files');
+var cleanCSS = require('gulp-clean-css');
+//var gulpFilter = require('gulp-filter');
+//var flatten = require('gulp-flatten');
 
 var jsPaths = {
   scripts: ['www/**/*.js', '!node_modules/**/*.js', '!bower_components/**/*.js', '!www/dist/**/*.js', '!typings/*.ts']
@@ -15,6 +18,20 @@ var jsPaths = {
 var jsServerPaths = {
   scripts: ['**/*.js', '!www/**/*.js', '!node_modules/**/*.js', '!bower_components/**/*.js', '!www/dist/**/*.js', '!typings/*.ts']
 };
+
+var sassPaths = {
+  scss: ['./www/sass/**/*.scss']
+};
+
+var bowerConfig = {
+    overrides: {
+      bootstrap: {
+        main: [
+          "./dist/css/*.min.css"
+        ]
+      }
+    }
+  };
 
 // Function that return the build javascript files for the Web App.
 var buildJs = function (enviroment) {
@@ -33,10 +50,12 @@ var buildJs = function (enviroment) {
     .pipe(gulp.dest('www/dist/js'));
 };
 
+// Build WebApp Dev Js
 gulp.task('build:js', function () {
   return buildJs('dev');
 });
 
+// Build WebApp Prod Js
 gulp.task('build:js:prod', function () {
   return buildJs('prod');
 });
@@ -48,7 +67,16 @@ gulp.task('build:server:js', function () {
     .pipe(jshint.reporter('default'));
 });
 
+// SCSS and CSS Tasks
+gulp.task('sass', function () {
 
+  return gulp.src(sassPaths.scss)
+    .pipe(sass({ outputStyle: 'compressed' }).on('error', sass.logError))
+    .pipe(concat('dest.css'))
+    .pipe(gulp.dest('www/dist/css'));
+});
+
+// Vendors Javascript tasks
 gulp.task('vendors:js', function () {
   // move JS files
   return gulp.src(mainBowerFiles('**/*.js'))
@@ -57,25 +85,11 @@ gulp.task('vendors:js', function () {
     .pipe(gulp.dest('www/dist/js'));
 });
 
+// Vendors Css Tasks
 gulp.task('vendors:css', function () {
 
-  return gulp.src(mainBowerFiles('**/*.css', {
-    overrides: {
-      bootstrap: {
-        main: [
-          './dist/css/*.min.css',
-        ]
-      }
-    }
-  })).pipe(concat('vendors.css'))
-    .pipe(gulp.dest('www/dist/css'));
-});
-
-// SCSS and CSS Tasks
-gulp.task('sass', function () {
-
-  return gulp.src('./www/sass/**/*.scss')
-    .pipe(sass({ outputStyle: 'compressed' }).on('error', sass.logError))
+  return gulp.src(mainBowerFiles('**/*.css',bowerConfig)).pipe(concat('vendors.css'))
+    .pipe(cleanCSS())
     .pipe(gulp.dest('www/dist/css'));
 });
 
@@ -83,9 +97,10 @@ gulp.task('sass', function () {
 gulp.task('watch', function () {
   gulp.watch(jsPaths.scripts, ['build:js']);
   gulp.watch(jsServerPaths.scripts, ['build:server:js']);
+  gulp.watch(sassPaths.scss, ['sass']);
 });
 
 // Builds the application
 gulp.task('build', ['build:js', 'build:server:js', 'sass', 'vendors:js', 'vendors:css']);
-gulp.task('build-prod', ['build:js:prod', 'build:server:js', 'sass']);
+gulp.task('build-prod', ['build:js:prod', 'build:server:js', 'sass', 'vendors:js', 'vendors:css']);
 

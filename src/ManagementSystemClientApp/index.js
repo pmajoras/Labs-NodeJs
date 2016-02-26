@@ -13,8 +13,12 @@ server.app.get('/', function (req, res) {
   res.sendFile(path.join(__dirname + '/www/index.html'));
 });
 
-server.app.get('/public/:path', function (req, res) {
-  res.sendFile(path.join(__dirname + '/www/dist/' + req.params.path));
+server.app.get('/public/css/:path', function (req, res) {
+  res.sendFile(path.join(__dirname + '/www/dist/css/' + req.params.path));
+});
+
+server.app.get('/public/js/:path', function (req, res) {
+  res.sendFile(path.join(__dirname + '/www/dist/js/' + req.params.path));
 });
 
 server.start();
