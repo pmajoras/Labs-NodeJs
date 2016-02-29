@@ -7,7 +7,7 @@
  * # MainCtrl
  * Controller of the wwwApp
  */
-angular.module('wwwApp')
+angular.module('todoApp')
   .controller('MainCtrl', function () {
     this.awesomeThings = [
       'HTML5 Boilerplate',

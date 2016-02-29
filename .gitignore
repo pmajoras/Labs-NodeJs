@@ -32,4 +32,4 @@ bower_components
 # ignore contents of folders
 src/ManagementSystemClientApp/typings/
 src/ManagementSystemRestApi/typings/
-src/ManagementSystemClientApp/www/dist/
+src/ManagementSystemClientApp/dist/

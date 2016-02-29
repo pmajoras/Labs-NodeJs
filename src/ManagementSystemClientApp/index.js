@@ -9,20 +9,24 @@ var fs = require('fs');
 // We will log all uncaught exceptions into exceptions.log
 // We will log all uncaught exceptions into exceptions.log
 
-server.app.get('/', function (req, res,next) {
+server.app.get('/', function (req, res, next) {
   var readPath = __dirname + '/dist';
-  fs.readdir(readPath, function(err, fileNames) {
-    
-    for(var i = 0; i < fileNames.length; i++) {
+  fs.readdir(readPath, function (err, fileNames) {
+
+    for (var i = 0; i < fileNames.length; i++) {
       var fileName = fileNames[i];
-      if(path.extname(fileName) === ".html") {
-        res.sendFile(path.join(readPath,fileName));
+      if (path.extname(fileName) === ".html") {
+        res.sendFile(path.join(readPath, fileName));
         return;
       }
     }
-    
+
     res.status(404).send('Not found');
   });
+});
+
+server.app.get('/favicon.ico', function (req, res) {
+  res.sendFile(path.join(__dirname + '/app/favicon.ico'));
 });
 
 server.app.get('/views/:path', function (req, res) {
