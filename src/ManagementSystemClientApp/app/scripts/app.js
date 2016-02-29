@@ -9,7 +9,7 @@
    *
    * Main module of the application.
    */
-  var app = angular
+  var app = window.app || angular
     .module('todoApp', [
       'ui.router',
       'ui.bootstrap',
@@ -28,4 +28,6 @@
       }
     });
   });
+
+  window.app = app;
 })();
