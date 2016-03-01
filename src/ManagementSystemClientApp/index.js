@@ -3,51 +3,34 @@
 var server = require('./server/server');
 var path = require('path');
 var fs = require('fs');
+var config = require('./config/config')[process.env.NODE_ENV || 'development'];
+var express = require('express');
 
 // We will log normal api operations into api.log
 
 // We will log all uncaught exceptions into exceptions.log
 // We will log all uncaught exceptions into exceptions.log
 
-server.app.get('/', function (req, res, next) {
-  var readPath = __dirname + '/dist';
-  fs.readdir(readPath, function (err, fileNames) {
+var appPath = __dirname + config.appPath;
 
-    for (var i = 0; i < fileNames.length; i++) {
-      var fileName = fileNames[i];
-      if (path.extname(fileName) === ".html") {
-        res.sendFile(path.join(readPath, fileName));
-        return;
-      }
-    }
+if (config.ENV === 'DEV') {
+  server.app.use('/', express.static('app'));
+  server.app.use('/scripts', express.static('app/scripts'));
+  server.app.use('/views', express.static('app/views'));
+  server.app.use('/fonts', express.static('app/fonts'));
+  server.app.use('/images', express.static('app/images'));
+  server.app.use('/styles', express.static('app/styles'));
+  server.app.use('/bower_components', express.static('bower_components'));
+}
+else {
+  server.app.use('/', express.static('dist'));
+  server.app.use('/scripts', express.static('dist/scripts'));
+  server.app.use('/views', express.static('dist/views'));
+  server.app.use('/fonts', express.static('dist/fonts'));
+  server.app.use('/images', express.static('www/app/images'));
+  server.app.use('/styles', express.static('dist/styles'));
+}
 
-    res.status(404).send('Not found');
-  });
-});
-
-server.app.get('/favicon.ico', function (req, res) {
-  res.sendFile(path.join(__dirname + '/app/favicon.ico'));
-});
-
-server.app.get('/views/:path', function (req, res) {
-  res.sendFile(path.join(__dirname + '/dist/views/' + req.params.path));
-});
-
-server.app.get('/styles/:path', function (req, res) {
-  res.sendFile(path.join(__dirname + '/dist/styles/' + req.params.path));
-});
-
-server.app.get('/scripts/:path', function (req, res) {
-  res.sendFile(path.join(__dirname + '/dist/scripts/' + req.params.path));
-});
-
-server.app.get('/fonts/:path', function (req, res) {
-  res.sendFile(path.join(__dirname + '/dist/fonts/' + req.params.path));
-});
-
-server.app.get('/images/:path', function (req, res) {
-  res.sendFile(path.join(__dirname + '/www/app/images/' + req.params.path));
-});
 
 server.start();
 console.log("Successfully started web server. Waiting for incoming connections...");

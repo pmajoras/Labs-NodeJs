@@ -1,9 +1,12 @@
-"use strict";
-
-var config = {};
-
-// Web Configurations
-config.web = {};
-config.web.port = process.env.PORT || 8080;
-
-module.exports = config;
+module.exports = {
+  "development": {
+    "port": 8080,
+    "appPath": "/app",
+    "ENV": "DEV"
+  },
+  "production": {
+    "port": 8080,
+    "appPath": "/dist",
+    "ENV": "PROD"
+  }
+}
