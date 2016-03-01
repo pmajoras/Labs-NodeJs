@@ -1,12 +1,12 @@
 module.exports = {
   "development": {
-    "port": 8080,
+    "port": 8089,
     "appPath": "/app",
     "ENV": "DEV"
   },
   "production": {
-    "port": 8080,
+    "port": 8089,
     "appPath": "/dist",
     "ENV": "PROD"
   }
-}
+};

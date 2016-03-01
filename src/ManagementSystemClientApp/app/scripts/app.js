@@ -17,11 +17,13 @@
     ]);
 
   app.constant('appUrl', {
-    views: 'http://localhost:8080/views/',
+    views: 'http://localhost:8089/views/',
+    api: 'http://localhost/PGPApi/api/'
   });
 
   app.run(function ($log, $rootScope, $state) {
-    
+    $rootScope.currentState = $state;
+
     $rootScope.$on('$stateChangeStart', function (event, toState) {
       if (toState.data && toState.data.authenticate === true) {
 
