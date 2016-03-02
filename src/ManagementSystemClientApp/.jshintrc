@@ -23,6 +23,7 @@
     "it",
     "after",
     "describe",
+    "localforage",
     "__dirname"
   ]
 }
