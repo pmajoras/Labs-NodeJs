@@ -30,16 +30,15 @@
       invalidateToken();
       $rootScope.isAuthenticated = false;
       $rootScope.$broadcast(appEvents.USER_AUTH_CHANGED);
-            
+
       return $q.when();
-    }; 
+    };
 
     return {
       removeAuthentication: removeAuthentication,
       authenticate: authenticate,
       checkCurrentAuthentication: checkCurrentAuthentication,
       reAuthenticate: reAuthenticate,
-      teste: storageService
     };
   });
 })();
