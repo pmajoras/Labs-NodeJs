@@ -6,7 +6,7 @@ describe("All Tests", function () {
 
   before(function () {
   });
-  
+
   importTest("authentication-service-test", __dirname + '/application-services/authentication-service-tests/config-tests');
 
   after(function () {
