@@ -1,9 +1,7 @@
 "use strict";
 
 var common = require("../../common");
-var mongoose = common.mongoose;
 var assert = common.assert;
-var config = common.config;
 
 var AuthenticationService = require('../../../application-services/authentication-service');
 var target = new AuthenticationService();
@@ -51,7 +49,7 @@ it("should not authenticate invalid user", function (done) {
 });
 
 after(function (done) {
-  common.mongoose.connection.db.dropDatabase(function (err, result) {
+  common.mongoose.connection.db.dropDatabase(function (err) {
     done(err);
   });
 });

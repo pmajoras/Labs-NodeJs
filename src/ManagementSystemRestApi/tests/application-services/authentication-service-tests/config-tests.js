@@ -8,7 +8,7 @@ common.mockgoose(common.mongoose);
 describe("Prepare Tests", function () {
   before(function (done) {
     common.mongoose.connect(config.db.connectionString, function (err) {
-      done();
+      done(err);
     });
   });
 

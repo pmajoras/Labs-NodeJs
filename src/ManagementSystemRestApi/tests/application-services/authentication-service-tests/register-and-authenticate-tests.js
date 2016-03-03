@@ -2,8 +2,6 @@
 
 var common = require("../../common");
 var assert = common.assert;
-var mongoose = common.mongoose;
-var config = common.config;
 
 var AuthenticationService = require('../../../application-services/authentication-service');
 var target = new AuthenticationService();
@@ -38,7 +36,7 @@ it("should not register and authenticate the same user", function (done) {
 });
 
 after(function (done) {
-  common.mongoose.connection.db.dropDatabase(function (err, result) {
+  common.mongoose.connection.db.dropDatabase(function (err) {
     done(err);
   });
 });
