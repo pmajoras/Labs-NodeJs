@@ -1,13 +1,12 @@
 "use strict";
 
-var RouteObject = require('../route-object');
+var RouteFactory = require('../route-factory');
 var UserService = require('../../domain/services/user-service');
-var appConstants = require('../../config/app-constants');
 var BaseController = require('../base-controller');
 
 class UserController extends BaseController {
-  constructor(allowedPermissions) {
-    super(allowedPermissions);
+  constructor() {
+    super();
     this.userService = new UserService();
   }
   
@@ -17,13 +16,15 @@ class UserController extends BaseController {
   getUsers(req, res, next) {
     this.userService.findAll({}, true)
       .then((data) => {
-        res.json(data);
+        res.setJsonResponse(data);
+        next();
       }, (err) => {
         next(err);
       });
   }
 }
 
-var methods = [];
-methods.push(new RouteObject(appConstants.get, "/api/users", "getUsers", [appConstants.mustBeAuthenticatedPermission]));
-module.exports = { "Controller": UserController, "methods": methods };
+var routeFactory = new RouteFactory("/api/users")
+  .get("", "getUsers");
+
+module.exports = { "Controller": UserController, "routeFactory": routeFactory };

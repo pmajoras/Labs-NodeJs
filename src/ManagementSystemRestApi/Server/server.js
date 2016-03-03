@@ -21,15 +21,21 @@ exports.start = () => {
   app.use(bodyParser.json());
   // use morgan to log requests to the console
   app.use(morgan('dev'));
-
-  app.get('/check', function (req, res) {
-    res.json(req.decoded);
-  });
-
+  app.disable('etag');
+  
   // middlewares setup
   middlewares.setup(app);
   // routes config
   routes.setup(app, controllers);
+
+  app.use(function (req, res) {
+    var response = res.getCurrentResponse();
+    res.status(response.status).json(response.content);
+    res.end();
+  });
+  
+  // middlewares errors setup
+  middlewares.setupErrorHandlers(app);
 
   let port = config.web.port || 8080;
   app.listen(port);

@@ -21,3 +21,4 @@ gulp.task('watch', function () {
 // Builds the application
 gulp.task('build', ['jshint']);
 
+gulp.task('default', ['build']);

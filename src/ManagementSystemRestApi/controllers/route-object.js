@@ -1,11 +1,12 @@
 "use strict";
 
 class RouteObject {
-  constructor(type, route, functionName, allowedPermissions) {
+  constructor(type, route, functionName, beforeExecutionMiddlewares, afterExecutionMiddlewares) {
     this.type = type;
     this.route = route;
     this.functionName = functionName;
-    this.permissions = allowedPermissions || [];
+    this.beforeExecutionMiddlewares = beforeExecutionMiddlewares || [];
+    this.afterExecutionMiddlewares = afterExecutionMiddlewares || [];
   }
 }
 

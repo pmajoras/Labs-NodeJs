@@ -1,12 +1,11 @@
 "use strict";
-var RouteObject = require('../route-object');
+var RouteFactory = require('../route-factory');
 var AuthenticationService = require('../../application-services/authentication-service');
-var appConstants = require('../../config/app-constants');
 var BaseController = require('../base-controller');
 
 class AuthenticationController extends BaseController {
-  constructor(allowedPermissions) {
-    super(allowedPermissions);
+  constructor() {
+    super();
     this.authenticationService = new AuthenticationService();
   }
   
@@ -17,7 +16,8 @@ class AuthenticationController extends BaseController {
 
     this.authenticationService.registerAndAuthenticate({ username: req.body.username, password: req.body.password })
       .then((data) => {
-        res.json(data);
+        res.setJsonResponse(data);
+        next();
       }, (err) => {
         next(err);
       });
@@ -26,14 +26,16 @@ class AuthenticationController extends BaseController {
   authenticate(req, res, next) {
     this.authenticationService.authenticate({ username: req.body.username, password: req.body.password })
       .then((data) => {
-        res.json(data);
+        res.setJsonResponse(data);
+        next();
       }, (err) => {
         next(err);
       });
   }
 }
 
-var methods = [];
-methods.push(new RouteObject(appConstants.post, "/api/authentication/register", "registerUser"));
-methods.push(new RouteObject(appConstants.post, "/api/authentication/authenticate", "authenticate"));
-module.exports = { "Controller": AuthenticationController, "methods": methods };
+var routeFactory = new RouteFactory("/api/authentication")
+  .post("/register", "registerUser")
+  .post("/authenticate", "authenticate");
+
+module.exports = { "Controller": AuthenticationController, "routeFactory": routeFactory };

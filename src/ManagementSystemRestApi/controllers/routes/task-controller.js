@@ -1,27 +1,29 @@
 "use strict";
-var RouteObject = require('../route-object');
-var appConstants = require('../../config/app-constants');
+var RouteFactory = require('../route-factory');
 var BaseController = require('../base-controller');
+var mustAuthorize = require('../../middlewares/general-middlewares/must-authorize');
 
 class TaskController extends BaseController {
-  constructor(allowedPermissions) {
-    super(allowedPermissions);
+  constructor() {
+    super();
   }
   
   /**
    * Get the tasks.
    */
-  getTasks(req, res) {
-    res.json({ message: 'hooray! welcome to our Tasks!' });
+  getTasks(req, res, next) {
+    res.setJsonResponse({ message: 'hooray! welcome to our Tãsks!' });
+    next();
   }
   /**
    * Insert a new task
    */
   insertTask() {
-
+    console.log("Passei para o próximo");
   }
 }
 
-var methods = [];
-methods.push(new RouteObject(appConstants.get, "/api/tasks", "getTasks", [appConstants.mustBeAuthenticatedPermission]));
-module.exports = { "Controller": TaskController, "methods": methods };
+var routeFactory = new RouteFactory("/api/tasks")
+  .get("", "getTasks", mustAuthorize.setup);
+
+module.exports = { "Controller": TaskController, "routeFactory": routeFactory };

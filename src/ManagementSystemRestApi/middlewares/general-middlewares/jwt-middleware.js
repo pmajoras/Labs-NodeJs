@@ -1,6 +1,6 @@
 "use strict";
 var jwt = require('jsonwebtoken');
-var config = require('../config/config');
+var config = require('../../config/config');
 
 /**
  * 
@@ -25,4 +25,4 @@ function setup(req, res, next) {
 }
 
 
-exports.setup = setup;
+module.exports.setup = setup;

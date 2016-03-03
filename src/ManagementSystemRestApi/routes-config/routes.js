@@ -5,29 +5,44 @@
  */
 function setup(app, controllers) {
 
-  // Iterate the controllers configuration
-  controllers.forEach(function (controllerConfig) {
+  var executeMiddlewares = function (app, route, middlewares) {
 
-    // Iterate trough the configurated methods
-    controllerConfig.methods.forEach(function (routeObject) {
+    if (middlewares && Array.isArray(middlewares)) {
 
-      // Apply the route to the specific type using the defined controller and call the functionName
-      app[routeObject.type](routeObject.route, function (req, res, next) {
-        var controller = new controllerConfig.Controller(routeObject.permissions);
-        var permissions = req.currentUser ? req.currentUser.permissions : [];
-
-        if (controller.isAllowed(permissions)) {
-          controller[routeObject.functionName](req, res, next);
-        }
-        else {
-          if (req.currentUser) {
-            res.status(403).json({ message: 'You dont have access to this method.' });
-          }
-          else {
-            res.status(401).json({ message: 'The user is not authenticated.' });
-          }
+      middlewares.forEach(function (middleware) {
+        if (typeof (middleware) == 'function') {
+          app.use(route, middleware);
         }
       });
+    }
+  };
+
+  // Iterate the controllers configuration
+  controllers.forEach(function (controllerConfig) {
+    var routeFactory = controllerConfig.routeFactory;
+    if (!routeFactory) {
+      throw new Error("Error on mapping route factory: Route Factory is undefined");
+    }
+    
+    // Iterate trough the configurated methods
+    routeFactory.routes.forEach(function (routeObject) {
+      
+      // Apply the use to the specified middlewares.
+      executeMiddlewares(app, routeObject.route, routeObject.beforeExecutionMiddlewares);      
+      // Apply the route to the specific type using the defined controller and call the functionName
+      app[routeObject.type](routeObject.route, function (req, res, next) {
+        var controller = null;
+        try {
+          controller = new controllerConfig.Controller();
+        } catch (err) {
+          // handle the error safely
+          next(err);
+        }
+
+        controller[routeObject.functionName](req, res, next);
+      });
+      // Apply the use to the specified middlewares.
+      executeMiddlewares(app, routeObject.route, routeObject.afterExecutionMiddlewares);
     });
   });
 }
