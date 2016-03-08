@@ -1,4 +1,6 @@
 "use strict";
+var logger = require('../../server/logger');
+
 /* jshint ignore:start */
 module.exports = {
 
@@ -25,7 +27,7 @@ module.exports = {
     res.end();
   },
   errorLogHandler: function logErrors(err, req, res, next) {
-    console.error("err.stack", err.stack);
+    logger.error("err", err);
     next(err);
   }
 }; 
