@@ -1,5 +1,5 @@
 "use strict";
-var UserService = require('../domain/services/user-service');
+var UserService = require('../domain/services/users/user-service');
 var jwt = require('jsonwebtoken');
 var config = require('../config/config');
 var appConstants = require('../config/app-constants');
@@ -18,31 +18,15 @@ class AuthenticationService {
 
   registerAndAuthenticate(userViewModel) {
     let deferred = Q.defer();
-
-    this.userService.findOne({ username: userViewModel.username })
-      .then((user) => {
-
-        if (!user) {
-
-          if (userViewModel.password && typeof userViewModel.password === "string" && userViewModel.password.length >= 6) {
-            this.userService.save(userViewModel)
-              .then((newEntity) => {
+    this.userService.save(userViewModel)
+      .then((newEntity) => {
                           
-                // create a token
-                let token = this._createToken(newEntity.username, newEntity._id);
-                deferred.resolve({ success: true, token: token });
-              }, (error) => {
-                deferred.reject(error);
-              });
-          }
-          else {
-            deferred.resolve({ success: false, message: 'The password must have at least 6 characters.' });
-          }
-        } else {
-          deferred.resolve({ success: false, message: 'There is already a user with this username.' });
-        }
-      }, (error) => {
-        deferred.reject(error);
+        // create a token
+        let token = this._createToken(newEntity.username, newEntity._id);
+        deferred.resolve({ success: true, token: token });
+      }, (err) => {
+        console.log("err", err);
+        deferred.reject(err);
       });
 
     return deferred.promise;

@@ -12,6 +12,18 @@ function createAppError(settings) {
   return (new AppError(settings, createAppError));
 }
 
+function createSpecificationError(content, settings) {
+
+  settings = settings || {};
+  settings.type = "Specification";
+  settings.statusCode = settings.statusCode || 400;
+  settings.content = content;
+  
+  // NOTE: We are overriding the "implementationContext" so that the createAppError()
+  // function is not part of the resulting stacktrace.
+  return (new AppError(settings, createSpecificationError));
+}
+
 
 // I am the custom error object for the application. The settings is a hash of optional
 // properties for the error instance:
@@ -43,6 +55,7 @@ function AppError(settings, implementationContext) {
   this.extendedInfo = settings.extendedInfo || "";
   this.errorCode = settings.errorCode || "";
   this.statusCode = settings.statusCode || 500;
+  this.content = settings.content || null;
 
   // This is just a flag that will indicate if the error is a custom AppError. If this
   // is not an AppError, this property will be undefined, which is a Falsey.
@@ -64,3 +77,4 @@ exports.AppError = AppError;
 // Export the factory function for the custom error object. The factory function lets
 // the calling context create new AppError instances without calling the [new] keyword.
 exports.createAppError = createAppError;
+exports.createSpecificationError = createSpecificationError;
