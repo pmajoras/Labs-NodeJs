@@ -12,6 +12,7 @@
     "mongoose": "~3.6.13",
     "morgan": "^1.6.1",
     "q": "^1.4.1",
+    "validator": "^5.1.0",
     "winston": "^2.2.0"
   },
   "scripts": {

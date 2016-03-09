@@ -1,6 +1,5 @@
 "use strict";
 var winston = require('winston');
-var path = require('path');
 var fs = require('fs');
 
 if (!fs.existsSync('logs')) {

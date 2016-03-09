@@ -1,7 +1,7 @@
 "use strict";
 
 var RouteFactory = require('../route-factory');
-var UserService = require('../../domain/services/user-service');
+var UserService = require('../../domain/services/users/user-service');
 var BaseController = require('../base-controller');
 
 class UserController extends BaseController {
