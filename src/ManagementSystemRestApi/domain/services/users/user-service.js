@@ -7,15 +7,18 @@ class UserService extends BaseDomainService {
     super("user");
   }
 
+  /**
+  * @returns {Array} - An array of the save specifications.
+  */
   getSaveSpecifications() {
     let saveSpecifications = super.getSaveSpecifications();
     let mongoPromise = (filter) => {
       return this.findAll(filter);
     };
 
-    saveSpecifications.push(new userSpecifications.UsernameMustBeAnEmailSpec("username", "O nome de usuário deve ser um e-mail válido.", 100));
-    saveSpecifications.push(new userSpecifications.UsernameMustBeUnique("username", mongoPromise, "Já existe um usuário com o e-mail informado.", 100));
-    saveSpecifications.push(new userSpecifications.PasswordMustHaveSixOrMoreCharsSpec());
+    saveSpecifications.push(new userSpecifications.getUsernameMustBeAnEmailSpec());
+    saveSpecifications.push(new userSpecifications.getUsernameMustBeUniqueSpec(mongoPromise));
+    saveSpecifications.push(new userSpecifications.getPasswordMustHaveSixOrMoreCharsSpec());
     return saveSpecifications;
   }
 }
