@@ -3,6 +3,12 @@ var SpecificationBase = require('../specification-base');
 var Q = require('q');
 
 class PropertyValueMustBeUniqueInMongoQuery extends SpecificationBase {
+  /**
+  * @param {string} propertyName - The property that must be validated.
+  * @param {Promise} mongoPromise - A promise that will return the mongo entities.
+  * @param {string} notSatisfiedReason - The error reason.
+  * @param {number} errorCode - The error code.
+  */
   constructor(propertyName, mongoPromise, notSatisfiedReason, errorCode) {
 
     super((target) => {
