@@ -7,7 +7,7 @@ class TaskController extends BaseController {
   constructor() {
     super();
   }
-  
+
   /**
    * Get the tasks.
    */
@@ -24,6 +24,6 @@ class TaskController extends BaseController {
 }
 
 var routeFactory = new RouteFactory("/api/tasks")
-  .get("", "getTasks", mustAuthorize.setup);
+  .get("", "getTasks", mustAuthorize);
 
 module.exports = { "Controller": TaskController, "routeFactory": routeFactory };

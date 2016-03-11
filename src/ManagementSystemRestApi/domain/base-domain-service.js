@@ -24,7 +24,7 @@ class BaseDomainService {
 
   /**
   * @param {Object} params - Find one by the specified params.
-  * @param {boolean} params - If true returns only the plain Json object.
+  * @param {boolean} lean - If true returns only the plain Json object.
   * @returns {Promise}
   */
   findOne(params, lean) {
