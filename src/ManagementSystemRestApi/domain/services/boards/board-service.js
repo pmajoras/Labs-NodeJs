@@ -1,5 +1,6 @@
 "use strict";
 var BaseDomainService = require('../../base-domain-service');
+var boardSpecifications = require('./specs/board-specifications');
 
 class BoardService extends BaseDomainService {
   constructor() {
@@ -11,6 +12,8 @@ class BoardService extends BaseDomainService {
   */
   getSaveSpecifications() {
     let saveSpecifications = super.getSaveSpecifications();
+    saveSpecifications.push(boardSpecifications.getBoardNameIsRequiredSpec());
+    saveSpecifications.push(boardSpecifications.getBoardOwnerIsRequiredAndIsMongoIdSpec());
     return saveSpecifications;
   }
 }

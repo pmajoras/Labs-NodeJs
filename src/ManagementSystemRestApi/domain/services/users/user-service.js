@@ -16,9 +16,9 @@ class UserService extends BaseDomainService {
       return this.findAll(filter);
     };
 
-    saveSpecifications.push(new userSpecifications.getUsernameMustBeAnEmailSpec());
-    saveSpecifications.push(new userSpecifications.getUsernameMustBeUniqueSpec(mongoPromise));
-    saveSpecifications.push(new userSpecifications.getPasswordMustHaveSixOrMoreCharsSpec());
+    saveSpecifications.push(userSpecifications.getUsernameMustBeAnEmailSpec());
+    saveSpecifications.push(userSpecifications.getUsernameMustBeUniqueSpec(mongoPromise));
+    saveSpecifications.push(userSpecifications.getPasswordMustHaveSixOrMoreCharsSpec());
     return saveSpecifications;
   }
 }

@@ -1,6 +1,7 @@
 "use strict";
 var UserService = require('../domain/services/users/user-service');
 var BoardService = require('../domain/services/boards/board-service');
+var Q = require("q");
 
 class TodoService {
   constructor() {
@@ -13,7 +14,22 @@ class TodoService {
   * @returns {Promise}
   */
   getBoardsByUserId(id) {
-    return this.boardService.findAll({ owner: id }, true);
+    let deferred = Q.defer();
+
+    this.userService.findById(id)
+      .then((user) => {
+        let boardIds = user.boards || [];
+        this.boardService.findAll({ owner: { $in: boardIds } }, true)
+          .then((boards) => {
+            deferred.resolve(boards);
+          }, (err) => {
+            deferred.reject(err);
+          });
+      }, (err) => {
+        deferred.reject(err);
+      });
+
+    return deferred.promise;
   }
 }
 
