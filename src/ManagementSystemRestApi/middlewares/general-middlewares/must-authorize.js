@@ -14,4 +14,4 @@ function setup(req, res, next) {
   }
 }
 
-module.exports.setup = setup;
+module.exports = setup;

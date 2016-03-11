@@ -20,12 +20,11 @@ class AuthenticationService {
     let deferred = Q.defer();
     this.userService.save(userViewModel)
       .then((newEntity) => {
-                          
+
         // create a token
         let token = this._createToken(newEntity.username, newEntity._id);
-        deferred.resolve({ success: true, token: token });
+        deferred.resolve({ success: true, token: token, id: newEntity._id });
       }, (err) => {
-        console.log("err", err);
         deferred.reject(err);
       });
 
@@ -44,7 +43,7 @@ class AuthenticationService {
         if (user) {
           // create a token
           let token = this._createToken(user.username, user._id);
-          deferred.resolve({ success: true, token: token });
+          deferred.resolve({ success: true, token: token, id: user._id });
         } else {
           deferred.resolve({ success: false, message: 'Invalid username or passowrd.' });
         }
