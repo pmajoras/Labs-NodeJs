@@ -3,7 +3,7 @@ var specificationError = require('../app-errors/app-error').createSpecificationE
 var Q = require('q');
 
 module.exports = {
-  "filterByNotSatisfiedSpecifications": function (specifications, target) {
+  "filterByNotSatisfiedSpecifications": function(specifications, target) {
     if (!Array.isArray(specifications) || specifications.length === 0) {
       return Q([]);
     }
@@ -22,7 +22,6 @@ module.exports = {
     Q.all(specificationsToSatisfyMethods).done((values) => {
       let notSatisfiedSpecifications = [];
       for (let i = 0; i < specificationsToSatisfy.length; i++) {
-        console.log("value" + i, values[i]);
         if (values[i] !== true) {
           notSatisfiedSpecifications.push(specificationsToSatisfy[i]);
         }
@@ -32,7 +31,7 @@ module.exports = {
 
     return deferred.promise;
   },
-  "getErrorFromNotSatisfiedSpecifications": function (specifications, target) {
+  "getErrorFromNotSatisfiedSpecifications": function(specifications, target) {
     var deferred = Q.defer();
 
     this.filterByNotSatisfiedSpecifications(specifications, target)
@@ -42,7 +41,7 @@ module.exports = {
         notSatisfiedSpecs.forEach((notSatisfiedSpec) => {
           errors.push({ "code": notSatisfiedSpec.errorCode, "message": notSatisfiedSpec.notSatisfiedReason });
         });
-
+        
         deferred.resolve(errors.length > 0 ? specificationError(errors) : null);
       }, (err) => {
         deferred.reject(err);

@@ -16,28 +16,32 @@ class BaseDomainService {
 
   /**
   * @param {Object} id - The id.
+  * @param populate - The name of property to populate, or an array with the properties to populate.
+  * @param {boolean} lean - If true returns only the plain Json object.
   * @returns {Promise}
   */
-  findById(id) {
-    return this.repository.findById(id);
+  findById(id, populate, lean) {
+    return this.repository.findById(id, populate, lean);
   }
 
   /**
   * @param {Object} params - Find one by the specified params.
+  * @param populate - The name of property to populate, or an array with the properties to populate.
   * @param {boolean} lean - If true returns only the plain Json object.
   * @returns {Promise}
   */
-  findOne(params, lean) {
-    return this.repository.findOne(params, lean);
+  findOne(params, populate, lean) {
+    return this.repository.findOne(params, populate, lean);
   }
 
   /**
   * @param {Object} params - Find all with the specified params.
+  * @param populate - The name of property to populate, or an array with the properties to populate.
   * @param {boolean} params - If true returns only the plain Json object.
   * @returns {Promise}
   */
-  findAll(params, lean) {
-    return this.repository.findAll(params, lean);
+  findAll(params, populate, lean) {
+    return this.repository.findAll(params, populate, lean);
   }
 
   /**
@@ -49,7 +53,6 @@ class BaseDomainService {
 
     specService.getErrorFromNotSatisfiedSpecifications(this.getSaveSpecifications(), entity)
       .then((notSatisfiedSpecsErrors) => {
-
         if (!notSatisfiedSpecsErrors) {
 
           if (!entity._id) {

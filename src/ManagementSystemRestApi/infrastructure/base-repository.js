@@ -15,43 +15,38 @@ class BaseRepository {
     this.Model = require(modelPath + modelName);
   }
 
-  findById(id) {
-    let deferred = Q.defer();
+  findById(id, populate, lean) {
+    return this.findOne({ _id: id }, populate, lean);
+  }
 
-    this.Model.findOne({ _id: id }, function(err, entity) {
+  findOne(params, populate, lean) {
+    let deferred = Q.defer();
+    let query = this.Model.findOne(params);
+
+    if (lean === true) {
+      query = query.lean();
+    }
+
+    query = this._populate(query, populate);
+    query.exec(function(err, entity) {
       defaultPromiseCallback(err, entity, deferred);
     });
 
     return deferred.promise;
   }
 
-  findOne(params, lean) {
+  findAll(params, populate, lean) {
     let deferred = Q.defer();
+    let query = this.Model.find(params);
+
     if (lean === true) {
-      this.Model.findOne(params).lean().exec(function(err, entity) {
-        defaultPromiseCallback(err, entity, deferred);
-      });
-    }
-    else {
-      this.Model.findOne(params, function(err, entity) {
-        defaultPromiseCallback(err, entity, deferred);
-      });
+      query = query.lean();
     }
 
-    return deferred.promise;
-  }
-
-  findAll(params, lean) {
-    let deferred = Q.defer();
-    if (!lean) {
-      this.Model.find(params).exec(function(err, entities) {
-        defaultPromiseCallback(err, entities, deferred);
-      });
-    } else {
-      this.Model.find(params).lean().exec(function(err, entities) {
-        defaultPromiseCallback(err, entities, deferred);
-      });
-    }
+    query = this._populate(query, populate);
+    query.exec(function(err, entity) {
+      defaultPromiseCallback(err, entity, deferred);
+    });
 
     return deferred.promise;
   }
@@ -79,6 +74,19 @@ class BaseRepository {
       defaultPromiseCallback(err, null, deferred);
     });
     return deferred.promise;
+  }
+
+  _populate(query, populate) {
+    if (typeof populate == 'string') {
+      query = query.populate(populate);
+    }
+    else if (Array.isArray(populate)) {
+      populate.forEach((populateProperty) => {
+        query = query.populate(populateProperty);
+      });
+    }
+
+    return query;
   }
 }
 
