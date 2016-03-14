@@ -20,7 +20,6 @@ class AuthenticationService {
     let deferred = Q.defer();
     this.userService.save(userViewModel)
       .then((newEntity) => {
-
         // create a token
         let token = this._createToken(newEntity.username, newEntity._id);
         deferred.resolve({ success: true, token: token, id: newEntity._id });

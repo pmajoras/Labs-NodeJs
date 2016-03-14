@@ -49,7 +49,6 @@ class BaseDomainService {
 
     specService.getErrorFromNotSatisfiedSpecifications(this.getSaveSpecifications(), entity)
       .then((notSatisfiedSpecsErrors) => {
-
         if (!notSatisfiedSpecsErrors) {
 
           if (!entity._id) {
