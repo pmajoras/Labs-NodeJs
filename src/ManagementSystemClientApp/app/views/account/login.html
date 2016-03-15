@@ -1,0 +1,24 @@
+<div style="width:100%;">
+    <div class="panel panel-primary">
+        <div class="panel-heading">Login</div>
+        <div class="panel-body">
+            <form novalidate class="login-form" name="loginForm">
+                <div class="form-group" show-errors>
+                    <label for="username">Email address</label>
+                    <input type="email" class="form-control" name="username" ng-model="username" required id="username" placeholder="Email">
+                    <p class="error-block" ng-if="loginForm.username.$error.required">O e-mail é obrigatório.</p>
+                    <p class="error-block" ng-if="loginForm.username.$error.email">O e-mail é inválido.</p>
+                </div>
+                <div class="form-group" show-errors>
+                    <label for="password">Senha</label>
+                    <input type="password" ng-minlength="6" ng-maxlength="20" name="password" ng-model="password" class="form-control" required
+                    id="password" placeholder="Senha">
+                    <p class="error-block" ng-if="loginForm.password.$error.required">A senha é obrigatória.</p>
+                    <p class="error-block" ng-if="loginForm.password.$error.minlength">A senha deve ter no mínimo 6 caractéres.</p>
+                    <p class="error-block" ng-if="loginForm.password.$error.maxlength">A senha deve ter no máximo 20 caractéres.</p>
+                </div>
+                <button type="submit" ng-disabled="loginForm.$invalid" class="btn btn-primary btn-lg">Entrar</button>
+            </form>
+        </div>
+    </div>
+</div>

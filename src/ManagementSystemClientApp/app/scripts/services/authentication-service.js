@@ -1,32 +1,38 @@
-(function () {
+(function() {
   'use strict';
 
-  angular.module('todoApp').service('authenticationService', function ($http, $log, $rootScope, $q, appUrl, storageService, appEvents) {
+  angular.module('todoApp').service('authenticationService', function($http, $log, $rootScope, $q, appUrl, storageService, appEvents) {
 
     var KEY_TOKEN = '$AUTH_TOKEN';
-      
+
     /**
      * Remove the current token from storageService.
      */
-    var invalidateToken = function () {
+    var invalidateToken = function() {
       storageService.remove(KEY_TOKEN);
     };
 
-    var authenticate = function () {
+    var authenticate = function() {
 
     };
 
-    var checkCurrentAuthentication = function () {
+    var checkCurrentAuthentication = function() {
+      if (storageService.get(KEY_TOKEN)) {
+        return true;
+      }
+      else {
+        return false;
+      }
     };
 
-    var reAuthenticate = function () {
+    var reAuthenticate = function() {
 
     };
 
     /**
      * Removes the current authentication token.
      */
-    var removeAuthentication = function () {
+    var removeAuthentication = function() {
       invalidateToken();
       $rootScope.isAuthenticated = false;
       $rootScope.$broadcast(appEvents.USER_AUTH_CHANGED);

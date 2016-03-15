@@ -1,6 +1,7 @@
 // bower:scss
 // endbower
 @import 'router-animation';
+@import 'login';
 
 .browsehappy {
   margin: 0.2em 0;
@@ -66,6 +67,15 @@ body {
   p + h4 {
     margin-top: 28px;
   }
+}
+
+.form-group .error-block {
+  display: none;
+}
+
+.form-group.has-error .error-block {
+  display: block;
+  color:red;
 }
 
 /* Responsive: Portrait tablets and up */
