@@ -44,7 +44,7 @@ class AuthenticationService {
           let token = this._createToken(user.username, user._id);
           deferred.resolve({ success: true, token: token, id: user._id });
         } else {
-          deferred.resolve({ success: false, message: 'Invalid username or passowrd.' });
+          deferred.resolve({ success: false, message: 'Invalid username or password.' });
         }
       }, (error) => {
         deferred.reject(error);

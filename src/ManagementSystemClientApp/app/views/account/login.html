@@ -1,0 +1,40 @@
+<div class="row">
+    <div class="col-md-3 col-sm-2">
+    </div>
+    <div class="col-md-6 col-sm-8 col-xs-12">
+        <div class="panel panel-primary">
+            <div class="panel-heading">Login</div>
+            <div class="panel-body">
+                <form novalidate name="loginForm">
+                    <div class="form-group" show-errors>
+                        <label for="username">Email</label>
+                        <input type="email" form-enter class="form-control" name="username" ng-model="loginRequest.username" auto-focus required
+                        id="username" placeholder="Email">
+                        <error-message message="O e-mail é obrigatório." show-error="loginForm.username.$error.required">
+                        </error-message>
+                        <error-message message="O e-mail é inválido." show-error="loginForm.username.$error.email">
+                        </error-message>
+                    </div>
+                    <div class="form-group" show-errors>
+                        <label for="password">Senha</label>
+                        <input type="password" form-enter ng-minlength="6" ng-maxlength="20" name="password" ng-model="loginRequest.password" class="form-control"
+                        required id="password" placeholder="Senha">
+                        <error-message message="A senha é obrigatória." show-error="loginForm.password.$error.required">
+                        </error-message>
+                        <error-message message="A senha deve ter no mínimo 6 caractéres." show-error="loginForm.password.$error.minlength">
+                        </error-message>
+                        <error-message message="A senha deve ter no máximo 20 caractéres." show-error="loginForm.password.$error.maxlength">
+                        </error-message>
+                    </div>
+                    <div class="form-group has-error" ng-show="errors.length > 0">
+                        <error-message ng-repeat="error in errors" message="{{error}}" show-error="true">
+                        </error-message>
+                    </div>
+                    <button type="submit" ng-click="login()" ng-disabled="loginForm.$invalid || submittingForm" class="button button-full button-primary">Entrar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-2">
+    </div>
+</div>

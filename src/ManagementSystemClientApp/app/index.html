@@ -11,6 +11,8 @@
     <!-- bower:css -->
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
     <link rel="stylesheet" href="bower_components/angular-bootstrap/ui-bootstrap-csp.css">
+    <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css">
+    <link rel="stylesheet" href="bower_components/Buttons/css/buttons.css">
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css(.tmp) styles/main.css -->
@@ -26,7 +28,7 @@
     <!-- Add your site or application content here -->
     <div class="header">
         <div class="navbar navbar-default" role="navigation">
-            <div class="container">
+            <div class="container-fluid">
                 <div class="navbar-header">
 
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#js-navbar-collapse">
@@ -42,8 +44,9 @@
                 <div class="collapse navbar-collapse" id="js-navbar-collapse">
 
                     <ul class="nav navbar-nav">
-                        <li ng-class="{active: currentState.name === 'home'}"><a ui-sref="home">Home</a></li>
-                        <li ng-class="{active: currentState.name === 'todo'}"><a ui-sref="todo">Todo</a></li>
+                        <li ng-class="{active: currentState === 'home'}"><a ui-sref="home">Home</a></li>
+                        <li ng-if="isAuthenticated" ng-class="{active: currentState === 'todo'}"><a ui-sref="todo">Todo</a></li>
+                        <li ng-if="!isAuthenticated" ng-class="{active: currentState === 'login'}"><a ui-sref="login">Entrar</a></li>
                     </ul>
                 </div>
             </div>
@@ -51,11 +54,11 @@
     </div>
 
     <!-- Container -->
-    <div id="main-container" class="container" ui-view>
+    <div id="main-container" class="container-fluid" ui-view>
     </div>
 
     <div class="footer">
-        <div class="container">
+        <div class="container-fluid">
             <p><span class="glyphicon glyphicon-heart"></span> from the Yeoman team</p>
         </div>
     </div>
@@ -81,7 +84,9 @@
     <script src="bower_components/angular-bootstrap/ui-bootstrap.js"></script>
     <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
     <script src="bower_components/angular-animate/angular-animate.js"></script>
+    <script src="bower_components/angular-bootstrap-show-errors/src/showErrors.min.js"></script>
     <script src="bower_components/localforage/dist/localforage.js"></script>
+    <script src="bower_components/Buttons/js/buttons.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -89,10 +94,15 @@
     <script src="scripts/app.js"></script>
     <script src="scripts/app-router.js"></script>
     <script src="scripts/controllers/main.js"></script>
-    <script src="scripts/controllers/maintodo.js"></script>
     <script src="scripts/controllers/todo/main-todo.js"></script>
+    <script src="scripts/controllers/admin/main-admin.js"></script>
+    <script src="scripts/controllers/account/login.js"></script>
     <script src="scripts/services/storage-service.js"></script>
     <script src="scripts/services/authentication-service.js"></script>
+    <script src="scripts/interceptors/http-interceptor.js"></script>
+    <script src="scripts/directives/common/error-message-directive.js"></script>
+    <script src="scripts/directives/common/auto-focus-directive.js"></script>
+    <script src="scripts/directives/common/form-enter-directive.js"></script>
     <!-- endbuild -->
 </body>
 

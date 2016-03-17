@@ -1,27 +1,44 @@
-(function () {
+(function() {
   'use strict';
 
   var app = window.app || angular.module('todoApp', [
     'ui.router',
     'ui.bootstrap',
-    'ngAnimate'
+    'ngAnimate',
+    'ui.bootstrap.showErrors',
+    'common'
   ]);
 
-  app.config(function ($stateProvider, $urlRouterProvider, appUrl) {
+  app.config(function($stateProvider, $urlRouterProvider, appUrl) {
     $urlRouterProvider.otherwise('/');
 
     $stateProvider
-    // Main
+      // Main
       .state('home', {
         url: '/',
         templateUrl: appUrl.views + 'home.html',
-        controller: 'MainCtrl'
+        controller: 'MainCtrl',
       })
-    // Todo App
+      // Admin
+      .state('login', {
+        url: '/Login',
+        templateUrl: appUrl.views + 'account/login.html',
+        controller: 'LoginCtrl',
+        data: { notAuthenticatedOnly: true }
+      })
+      // Todo App
       .state('todo', {
         url: '/Todo',
         templateUrl: appUrl.views + 'todo/main.html',
-        controller: 'MainTodoCtrl'
+        controller: 'MainTodoCtrl',
+        data: { authenticate: true }
+      })
+      // Admin
+      .state('admin', {
+        url: '/Admin',
+        templateUrl: appUrl.views + 'admin/main-admin.html',
+        controller: 'MainAdminCtrl',
+        data: { authenticate: true }
       });
   });
 
