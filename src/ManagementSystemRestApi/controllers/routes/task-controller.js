@@ -23,7 +23,7 @@ class TaskController extends BaseController {
   }
 }
 
-var routeFactory = new RouteFactory("/api/tasks")
+var routeFactory = new RouteFactory("/tasks")
   .get("", "getTasks", mustAuthorize);
 
 module.exports = { "Controller": TaskController, "routeFactory": routeFactory };

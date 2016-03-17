@@ -21,7 +21,7 @@ class TodoController extends BaseController {
   }
 }
 
-var routeFactory = new RouteFactory("/api/todo/:id/")
+var routeFactory = new RouteFactory("/todo/:id/")
   .get("boards", "getBoards", mustAuthorizeWithId);
 
 module.exports = { "Controller": TodoController, "routeFactory": routeFactory };
