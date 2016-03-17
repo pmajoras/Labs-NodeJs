@@ -5,7 +5,8 @@
     'ui.router',
     'ui.bootstrap',
     'ngAnimate',
-    'ui.bootstrap.showErrors'
+    'ui.bootstrap.showErrors',
+    'common'
   ]);
 
   app.config(function($stateProvider, $urlRouterProvider, appUrl) {
@@ -22,12 +23,13 @@
       .state('login', {
         url: '/Login',
         templateUrl: appUrl.views + 'account/login.html',
-        controller: 'LoginCtrl'
+        controller: 'LoginCtrl',
+        data: { notAuthenticatedOnly: true }
       })
       // Todo App
       .state('todo', {
         url: '/Todo',
-        templateUrl: appUrl.views + 'todo/main-todo.html',
+        templateUrl: appUrl.views + 'todo/main.html',
         controller: 'MainTodoCtrl',
         data: { authenticate: true }
       })

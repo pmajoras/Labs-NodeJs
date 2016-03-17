@@ -2,6 +2,7 @@
 // endbower
 @import 'router-animation';
 @import 'login';
+@import 'buttons';
 
 .browsehappy {
   margin: 0.2em 0;
@@ -73,9 +74,20 @@ body {
   display: none;
 }
 
+.form-group.has-error {
+  color:red;
+}
+
 .form-group.has-error .error-block {
   display: block;
-  color:red;
+}
+
+.form-group.has-error .error-block i {
+  margin-right: 5px;
+}
+
+.center {
+    text-align: center;
 }
 
 /* Responsive: Portrait tablets and up */

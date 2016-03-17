@@ -109,12 +109,9 @@ body {
   display: none;
 }
 
-.form-group.has-error {
-  color:red;
-}
-
 .form-group.has-error .error-block {
   display: block;
+  color: red;
 }
 
 .form-group.has-error .error-block i {

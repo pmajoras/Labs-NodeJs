@@ -4,6 +4,7 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var morgan = require('morgan');
+var cors = require('cors')
 
 // Application modules
 var controllers = require('../controllers/controllers-config');
@@ -22,18 +23,19 @@ exports.start = () => {
   // use morgan to log requests to the console
   app.use(morgan('dev'));
   app.disable('etag');
-  
+  app.use(cors());
+
   // middlewares setup
   middlewares.setup(app);
   // routes config
   routes.setup(app, controllers);
 
-  app.use(function (req, res) {
+  app.use(function(req, res) {
     var response = res.getCurrentResponse();
     res.status(response.status).json(response.content);
     res.end();
   });
-  
+
   // middlewares errors setup
   middlewares.setupErrorHandlers(app);
 
